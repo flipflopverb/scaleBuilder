@@ -13,7 +13,7 @@ const initializeScaleArray = function(){
     return{scaleArray}
 }();
 
-const noteArray = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
+const noteArray = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B","C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 
 function scaleObject(a, b, c, d, e){
 
@@ -74,35 +74,58 @@ for(i=0; a<(W+1); i++){
     interval = scaleObj.scaleInterval
     let sum = 0
     interval.forEach(element => {
-        sum += element
         scaleObj.scaleNotes.push(noteArray[sum])
+        sum += element
    });
 
-e++
+    e++
 
-if (e > W){
-e = 1
-d++
+    if (e > W){
+    e = 1
+    d++
+    }
+
+    if (d > W){    
+    d = 1
+    c++ 
+    }
+
+    if (c > W){
+    c = 1
+    b++
+    }
+
+    if (b > W){
+    b = 1
+    a++
+    }
+
+    if(sum == 12){
+        let inversionInterval1 = e+""+a+""+b+""+c+""+d
+        let inversionInterval2 = d+""+e+""+a+""+b+""+c
+        let inversionInterval3 = c+""+d+""+e+""+a+""+b
+        let inversionInterval4 = b+""+c+""+d+""+e+""+a
+        let inversionInterval5 = a+""+b+""+c+""+d+""+e
+        console.log(scaleObj.scaleId, inversionInterval1, inversionInterval2, inversionInterval3, inversionInterval4, inversionInterval5)
+        if(scaleArray.length == 0){
+            scaleArray.push(scaleObj)
+        }else{
+            let p = 0
+            scaleArray.forEach(element => { 
+                if( (element.scaleId == inversionInterval1) ||
+                    (element.scaleId == inversionInterval2) ||
+                    (element.scaleId == inversionInterval3) ||
+                    (element.scaleId == inversionInterval4) ||
+                    (element.scaleId == inversionInterval5)
+                ){}else{p++}   
+            })
+            if(p>0){
+            scaleArray.push(scaleObj)
+            console.log(scaleObj.scaleId, scaleObj.scaleNotes, i)}
+        }
+        
+    }
 }
 
-if (d > W){    
-d = 1
-c++ 
-}
-
-if (c > W){
-c = 1
-b++
-}
-
-if (b > W){
-b = 1
-a++
-}
-
-if(sum == 12){
-    scaleArray.push(scaleObj)
-    console.log(scaleObj.scaleId, scaleObj.scaleNotes)
-}
-}
+console.log(scaleArray.length)
 
